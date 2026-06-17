@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPOC y Sedación Dental — Guía para Pacientes</title>
+<style>
+  :root {
+    --azul: #0D1B6E;
+    --azul-m: #1A35E0;
+    --azul-cl: #E6F1FB;
+    --azul-bd: #B5D4F4;
+    --rojo: #A32D2D;
+    --rojo-cl: #FCEBEB;
+    --rojo-bd: #F7C1C1;
+    --verde: #3B6D11;
+    --verde-cl: #EAF3DE;
+    --verde-bd: #C0DD97;
+    --ambar: #854F0B;
+    --ambar-cl: #FAEEDA;
+    --ambar-bd: #FAC775;
+    --gris-txt: #2C2C2A;
+    --gris-s: #F1EFE8;
+    --gris-bd: #D3D1C7;
+    --bg: #ffffff;
+    --bg2: #f8f7f4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg2); color: var(--gris-txt); line-height: 1.6; }
+
+  /* NAV */
+  .nav-bar { background: var(--azul); padding: 0 1.5rem; display: flex; align-items: center; gap: 0; overflow-x: auto; position: sticky; top: 0; z-index: 100; }
+  .nav-bar a { color: #B5D4F4; text-decoration: none; font-size: 13px; padding: 14px 16px; display: block; white-space: nowrap; border-bottom: 3px solid transparent; transition: all .18s; }
+  .nav-bar a.active, .nav-bar a:hover { color: #fff; border-bottom-color: #1A35E0; }
+  .nav-logo { color: #fff; font-size: 15px; font-weight: 600; padding: 14px 20px 14px 0; border-right: 1px solid rgba(255,255,255,.15); margin-right: 8px; white-space: nowrap; }
+
+  /* HERO */
+  .hero { background: var(--azul); color: #fff; padding: 3.5rem 1.5rem 2.5rem; text-align: center; }
+  .hero h1 { font-size: clamp(22px, 5vw, 36px); font-weight: 700; line-height: 1.25; margin-bottom: .75rem; }
+  .hero p { font-size: 16px; color: #B5D4F4; max-width: 560px; margin: 0 auto 2rem; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 2rem; }
+  .hero-badge { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; font-size: 12px; padding: 5px 14px; border-radius: 20px; }
+  .stats-row { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+  .stat-box { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 12px; padding: 1rem 1.5rem; text-align: center; min-width: 130px; }
+  .stat-num { font-size: 28px; font-weight: 700; color: #fff; }
+  .stat-lbl { font-size: 11px; color: #B5D4F4; margin-top: 3px; }
+
+  /* SECTIONS */
+  .section { display: none; max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card { background: var(--bg); border: 1px solid var(--gris-bd); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .card-title { font-size: 16px; font-weight: 600; color: var(--azul); margin-bottom: .75rem; display: flex; align-items: center; gap: 8px; }
+  .card-body { font-size: 14px; color: var(--gris-txt); line-height: 1.7; }
+
+  /* ALERTS */
+  .alert { border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1rem; font-size: 14px; line-height: 1.65; border-left: 4px solid; }
+  .alert-info { background: var(--azul-cl); border-color: var(--azul-m); color: #0C447C; }
+  .alert-danger { background: var(--rojo-cl); border-color: var(--rojo); color: #501313; }
+  .alert-success { background: var(--verde-cl); border-color: var(--verde); color: #173404; }
+  .alert-warning { background: var(--ambar-cl); border-color: var(--ambar); color: #412402; }
+  .alert strong { display: block; margin-bottom: 4px; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+
+  /* METRIC CARDS */
+  .metric { background: var(--gris-s); border-radius: 10px; padding: 1.25rem; text-align: center; }
+  .metric-val { font-size: 26px; font-weight: 700; color: var(--azul); }
+  .metric-lbl { font-size: 12px; color: #5F5E5A; margin-top: 4px; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin: .75rem 0; }
+  .tag { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
+  .tag-green { background: var(--verde-cl); color: var(--verde); border: 1px solid var(--verde-bd); }
+  .tag-red { background: var(--rojo-cl); color: var(--rojo); border: 1px solid var(--rojo-bd); }
+  .tag-amber { background: var(--ambar-cl); color: var(--ambar); border: 1px solid var(--ambar-bd); }
+  .tag-blue { background: var(--azul-cl); color: var(--azul); border: 1px solid var(--azul-bd); }
+
+  /* STEPS */
+  .step { display: flex; gap: 12px; margin-bottom: 1rem; align-items: flex-start; }
+  .step-num { min-width: 32px; height: 32px; border-radius: 50%; background: var(--azul); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+  .step-num.green { background: var(--verde); }
+  .step-num.red { background: var(--rojo); }
+  .step-title { font-size: 14px; font-weight: 600; color: var(--gris-txt); }
+  .step-desc { font-size: 13px; color: #5F5E5A; line-height: 1.6; margin-top: 3px; }
+
+  /* FAQ */
+  .faq-item { border: 1px solid var(--gris-bd); border-radius: 10px; margin-bottom: .75rem; overflow: hidden; }
+  .faq-q { background: var(--bg); padding: 1rem 1.25rem; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background .15s; color: var(--azul); }
+  .faq-q:hover { background: var(--azul-cl); }
+  .faq-a { background: var(--gris-s); padding: 1rem 1.25rem; font-size: 14px; line-height: 1.7; color: var(--gris-txt); display: none; }
+  .faq-a.open { display: block; }
+  .faq-arrow { transition: transform .2s; font-size: 18px; color: var(--azul); }
+  .faq-arrow.open { transform: rotate(180deg); }
+
+  /* SECTION HEADER */
+  .section-head { margin-bottom: 1.5rem; }
+  .section-head h2 { font-size: 22px; font-weight: 700; color: var(--azul); margin-bottom: .35rem; }
+  .section-head p { font-size: 14px; color: #5F5E5A; max-width: 640px; }
+
+  /* LUNG DIAGRAM */
+  .lung-container { background: var(--bg); border: 1px solid var(--gris-bd); border-radius: 14px; padding: 1rem; margin-bottom: 1.25rem; }
+  .lung-container h3 { font-size: 14px; font-weight: 600; color: var(--azul); margin-bottom: .75rem; text-align: center; }
+
+  /* GOLD SELECTOR */
+  .gold-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+  .gold-btn { padding: 9px 18px; border-radius: 8px; border: 2px solid var(--gris-bd); background: var(--bg); cursor: pointer; font-size: 13px; font-weight: 600; transition: all .18s; color: var(--gris-txt); }
+  .gold-btn.active { border-color: var(--azul-m); background: var(--azul-cl); color: var(--azul); }
+  .gold-panel { display: none; }
+  .gold-panel.active { display: block; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; font-size: 14px; border-bottom: 1px solid var(--gris-s); }
+  .checklist li:last-child { border-bottom: none; }
+  .check-icon { min-width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; margin-top: 1px; }
+  .check-icon.ok { background: var(--verde-cl); color: var(--verde); }
+  .check-icon.no { background: var(--rojo-cl); color: var(--rojo); }
+  .check-icon.warn { background: var(--ambar-cl); color: var(--ambar); }
+
+  /* QUIZ */
+  .quiz-q { font-size: 15px; font-weight: 600; color: var(--azul); margin-bottom: 1rem; }
+  .quiz-opt { padding: .85rem 1rem; border: 1.5px solid var(--gris-bd); border-radius: 10px; margin-bottom: .6rem; cursor: pointer; font-size: 14px; transition: all .15s; }
+  .quiz-opt:hover { border-color: var(--azul-m); background: var(--azul-cl); }
+  .quiz-opt.correct { border-color: var(--verde); background: var(--verde-cl); color: var(--verde); }
+  .quiz-opt.wrong { border-color: var(--rojo); background: var(--rojo-cl); color: var(--rojo); }
+  .quiz-feedback { font-size: 13px; padding: .75rem 1rem; border-radius: 8px; margin-top: .5rem; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-nav { display: flex; gap: 10px; margin-top: 1rem; align-items: center; }
+  .quiz-nav button { padding: 8px 18px; border-radius: 8px; border: 1.5px solid var(--azul-m); background: var(--azul-m); color: #fff; font-size: 13px; cursor: pointer; transition: opacity .15s; }
+  .quiz-nav button:hover { opacity: .85; }
+  .quiz-nav button.sec { background: var(--bg); color: var(--azul); }
+  .quiz-progress { font-size: 12px; color: #5F5E5A; }
+  .score-display { text-align: center; padding: 2rem; }
+  .score-big { font-size: 56px; font-weight: 700; color: var(--azul); }
+
+  /* CHECKER TOOL */
+  .checker-field { margin-bottom: 1rem; }
+  .checker-field label { font-size: 13px; font-weight: 600; color: var(--gris-txt); margin-bottom: 5px; display: block; }
+  .checker-field select { width: 100%; padding: 10px 12px; border: 1.5px solid var(--gris-bd); border-radius: 8px; font-size: 14px; background: var(--bg); color: var(--gris-txt); }
+  .checker-result { border-radius: 12px; padding: 1.25rem; margin-top: 1rem; text-align: center; }
+  .checker-result.green { background: var(--verde-cl); border: 2px solid var(--verde-bd); }
+  .checker-result.amber { background: var(--ambar-cl); border: 2px solid var(--ambar-bd); }
+  .checker-result.red { background: var(--rojo-cl); border: 2px solid var(--rojo-bd); }
+  .checker-result .result-icon { font-size: 36px; margin-bottom: .5rem; }
+  .checker-result .result-title { font-size: 16px; font-weight: 700; margin-bottom: .5rem; }
+  .checker-result .result-body { font-size: 13px; line-height: 1.65; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 14px; top: 0; bottom: 0; width: 2px; background: var(--gris-bd); }
+  .tl-item { position: relative; padding-bottom: 1.5rem; }
+  .tl-dot { position: absolute; left: -1.9rem; top: 3px; width: 20px; height: 20px; border-radius: 50%; border: 2.5px solid var(--bg); }
+  .tl-dot.blue { background: var(--azul-m); }
+  .tl-dot.green { background: var(--verde); }
+  .tl-dot.red { background: var(--rojo); }
+  .tl-time { font-size: 11px; font-weight: 600; color: #5F5E5A; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 3px; }
+  .tl-title { font-size: 14px; font-weight: 600; color: var(--gris-txt); }
+  .tl-body { font-size: 13px; color: #5F5E5A; line-height: 1.6; margin-top: 3px; }
+
+  /* RESPIRATION INTERACTIVE */
+  .breath-row { margin-bottom: .85rem; }
+  .breath-label-row { display: flex; justify-content: space-between; font-size: 13px; color: #5F5E5A; margin-bottom: 4px; }
+  .breath-bar-wrap { height: 22px; background: var(--gris-s); border-radius: 11px; overflow: hidden; }
+  .breath-bar { height: 100%; border-radius: 11px; transition: width .5s; }
+
+  /* EMERGENCY BOX */
+  .emerg-step { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gris-s); }
+  .emerg-num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--rojo); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* PRINT BUTTON */
+  .print-btn { background: var(--azul); color: #fff; border: none; padding: 10px 22px; border-radius: 8px; font-size: 14px; cursor: pointer; }
+  .print-btn:hover { background: var(--azul-m); }
+
+  /* FOOTER */
+  .footer { text-align: center; padding: 2rem; font-size: 12px; color: #888780; border-top: 1px solid var(--gris-bd); max-width: 860px; margin: 0 auto; }
+
+  @media print {
+    .nav-bar, .hero-badges, .hero .stats-row { display: none; }
+    .section { display: block !important; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <span class="nav-logo">🫁 EPOC &amp; Sedación</span>
+  <a href="#" class="active" onclick="showSection('inicio',this)">Inicio</a>
+  <a href="#" onclick="showSection('epoc',this)">¿Qué es la EPOC?</a>
+  <a href="#" onclick="showSection('sedacion',this)">La sedación</a>
+  <a href="#" onclick="showSection('riesgos',this)">Riesgos y cuidados</a>
+  <a href="#" onclick="showSection('checker',this)">¿Puedo sedarme?</a>
+  <a href="#" onclick="showSection('preparacion',this)">Preparación</a>
+  <a href="#" onclick="showSection('quiz',this)">Quiz</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Tengo EPOC.<br>¿Me puedo sedar en el dentista?</h1>
+  <p>Una guía clara y confiable para entender cómo su enfermedad pulmonar interactúa con la sedación dental y cómo prepararse de forma segura.</p>
+  <div class="hero-badges">
+    <span class="hero-badge">Basado en evidencia científica</span>
+    <span class="hero-badge">GOLD 2024</span>
+    <span class="hero-badge">Anesthesia Progress 2019</span>
+    <span class="hero-badge">EFP / WONCA 2023</span>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-num">213M</div><div class="stat-lbl">personas con EPOC en el mundo</div></div>
+    <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">estadios de gravedad (GOLD)</div></div>
+    <div class="stat-box"><div class="stat-num">3</div><div class="stat-lbl">tipos de sedación odontológica</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════ INICIO ═══════════════ -->
+<section class="section active" id="inicio">
+  <div class="section-head">
+    <h2>Bienvenido a su guía de salud</h2>
+    <p>Utilice el menú superior para navegar entre los temas. Puede leerlos en orden o saltar directamente a lo que más le interese.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" onclick="showSection('epoc',document.querySelectorAll('.nav-bar a')[1])" style="cursor:pointer">
+      <div class="card-title">🫁 ¿Qué es la EPOC?</div>
+      <div class="card-body">Conozca qué le pasa a sus pulmones, por qué se produce la EPOC y cómo afecta su respiración día a día. Incluye gráficos interactivos.</div>
+    </div>
+    <div class="card" onclick="showSection('sedacion',document.querySelectorAll('.nav-bar a')[2])" style="cursor:pointer">
+      <div class="card-title">💊 La sedación dental</div>
+      <div class="card-body">Entienda qué es la sedación consciente, qué tipos existen y por qué algunas opciones son más seguras que otras cuando usted tiene EPOC.</div>
+    </div>
+    <div class="card" onclick="showSection('riesgos',document.querySelectorAll('.nav-bar a')[3])" style="cursor:pointer">
+      <div class="card-title">⚠️ Riesgos y cuidados</div>
+      <div class="card-body">Aprenda qué interacciones existen entre la EPOC y los medicamentos sedantes, y qué hace su dentista para mantenerlo seguro.</div>
+    </div>
+    <div class="card" onclick="showSection('checker',document.querySelectorAll('.nav-bar a')[4])" style="cursor:pointer">
+      <div class="card-title">✅ ¿Puedo sedarme?</div>
+      <div class="card-body">Use nuestra herramienta interactiva: responda 4 preguntas y obtenga una orientación personalizada sobre su caso.</div>
+    </div>
+    <div class="card" onclick="showSection('preparacion',document.querySelectorAll('.nav-bar a')[5])" style="cursor:pointer">
+      <div class="card-title">📋 Preparación para la cita</div>
+      <div class="card-body">Lista de pasos concretos antes, durante y después de su tratamiento dental con sedación. Para hacer con su dentista.</div>
+    </div>
+    <div class="card" onclick="showSection('quiz',document.querySelectorAll('.nav-bar a')[6])" style="cursor:pointer">
+      <div class="card-title">🧠 Quiz de comprensión</div>
+      <div class="card-body">Ponga a prueba lo que aprendió con 8 preguntas interactivas. Obtenga retroalimentación inmediata en cada respuesta.</div>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>Este material es educativo, no reemplaza a su médico ni dentista.</strong>
+    Toda decisión clínica debe tomarla junto a su equipo de salud, considerando su situación particular.
+  </div>
+</section>
+
+<!-- ═══════════════ QUÉ ES LA EPOC ═══════════════ -->
+<section class="section" id="epoc">
+  <div class="section-head">
+    <h2>¿Qué es la EPOC?</h2>
+    <p>La Enfermedad Pulmonar Obstructiva Crónica es una enfermedad crónica y prevenible que afecta su respiración de forma permanente.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔬 Definición simple</div>
+    <div class="card-body">
+      <p style="margin-bottom:.75rem">En la EPOC, sus bronquios (los tubos por donde pasa el aire hacia los pulmones) se inflaman y se estrechan crónicamente. Además, los alvéolos — las pequeñas bolsas donde el oxígeno pasa a la sangre — se destruyen. Esto hace que su cuerpo tenga que trabajar mucho más para respirar.</p>
+      <div class="tags">
+        <span class="tag tag-blue">Obstrucción al flujo de aire</span>
+        <span class="tag tag-blue">Inflamación crónica</span>
+        <span class="tag tag-blue">Destrucción de alvéolos (enfisema)</span>
+        <span class="tag tag-blue">Hipersecreción de moco (bronquitis)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SVG Fisiopatología -->
+  <div class="lung-container">
+    <h3>¿Cómo afecta la EPOC a sus pulmones?</h3>
+    <svg width="100%" viewBox="0 0 680 320" role="img">
+      <title>Fisiopatología simplificada de la EPOC</title>
+      <desc>Esquema que muestra cómo los factores de riesgo causan inflamación y destrucción pulmonar en la EPOC</desc>
+      <!-- Factores de riesgo (top row) -->
+      <rect x="20" y="20" width="175" height="50" rx="8" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1"/>
+      <text x="107" y="41" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">Tabaquismo</text>
+      <text x="107" y="57" text-anchor="middle" font-size="11" fill="#185FA5">(principal factor)</text>
+
+      <rect x="212" y="20" width="175" height="50" rx="8" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1"/>
+      <text x="299" y="41" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">Contaminación</text>
+      <text x="299" y="57" text-anchor="middle" font-size="11" fill="#185FA5">ambiental / laboral</text>
+
+      <rect x="404" y="20" width="175" height="50" rx="8" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1"/>
+      <text x="491" y="41" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">Factores genéticos</text>
+      <text x="491" y="57" text-anchor="middle" font-size="11" fill="#185FA5">déficit alfa-1 antitripsina</text>
+
+      <!-- Flechas hacia inflamación -->
+      <line x1="107" y1="70" x2="280" y2="108" stroke="#B5D4F4" stroke-width="1.5" marker-end="url(#arrE)"/>
+      <line x1="299" y1="70" x2="299" y2="108" stroke="#B5D4F4" stroke-width="1.5" marker-end="url(#arrE)"/>
+      <line x1="491" y1="70" x2="320" y2="108" stroke="#B5D4F4" stroke-width="1.5" marker-end="url(#arrE)"/>
+
+      <!-- Inflamación -->
+      <rect x="120" y="108" width="360" height="50" rx="10" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="1.5"/>
+      <text x="300" y="129" text-anchor="middle" font-size="13" font-weight="700" fill="#3C3489">Inflamación crónica de la vía aérea</text>
+      <text x="300" y="147" text-anchor="middle" font-size="11" fill="#534AB7">neutrófilos · macrófagos · linfocitos T CD8+</text>
+
+      <!-- Flechas hacia consecuencias -->
+      <line x1="180" y1="158" x2="110" y2="196" stroke="#AFA9EC" stroke-width="1.5" marker-end="url(#arrE)"/>
+      <line x1="300" y1="158" x2="300" y2="196" stroke="#AFA9EC" stroke-width="1.5" marker-end="url(#arrE)"/>
+      <line x1="420" y1="158" x2="490" y2="196" stroke="#AFA9EC" stroke-width="1.5" marker-end="url(#arrE)"/>
+
+      <!-- Consecuencias (3 columnas) -->
+      <rect x="20" y="196" width="175" height="50" rx="8" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1"/>
+      <text x="107" y="217" text-anchor="middle" font-size="12" font-weight="600" fill="#27500A">Destrucción alveolar</text>
+      <text x="107" y="233" text-anchor="middle" font-size="11" fill="#3B6D11">→ Enfisema</text>
+
+      <rect x="212" y="196" width="175" height="50" rx="8" fill="#FAEEDA" stroke="#FAC775" stroke-width="1"/>
+      <text x="299" y="217" text-anchor="middle" font-size="12" font-weight="600" fill="#633806">Hipersecreción de moco</text>
+      <text x="299" y="233" text-anchor="middle" font-size="11" fill="#854F0B">→ Bronquitis crónica</text>
+
+      <rect x="404" y="196" width="175" height="50" rx="8" fill="#EAF3DE" stroke="#C0DD97" stroke-width="1"/>
+      <text x="491" y="217" text-anchor="middle" font-size="12" font-weight="600" fill="#27500A">Remodelado vía aérea</text>
+      <text x="491" y="233" text-anchor="middle" font-size="11" fill="#3B6D11">→ Fibrosis</text>
+
+      <!-- Flecha al resultado final -->
+      <line x1="300" y1="246" x2="300" y2="272" stroke="#888780" stroke-width="1.5" marker-end="url(#arrE)"/>
+
+      <!-- Resultado -->
+      <rect x="100" y="272" width="400" height="38" rx="8" fill="#0D1B6E" stroke="#0D1B6E"/>
+      <text x="300" y="286" text-anchor="middle" font-size="12" font-weight="700" fill="#ffffff">Obstrucción al flujo de aire</text>
+      <text x="300" y="302" text-anchor="middle" font-size="11" fill="#B5D4F4">VEF₁/CVF &lt; 0.70 post-broncodilatador (criterio diagnóstico GOLD 2024)</text>
+
+      <defs>
+        <marker id="arrE" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+    </svg>
+    <p style="text-align:center;font-size:11px;color:#888780;margin-top:.5rem">Basado en GOLD 2024 — Siafakas et al., Respir Med, 2018</p>
+  </div>
+
+  <!-- GOLD Interactivo -->
+  <div class="card">
+    <div class="card-title">📊 ¿Cuál es su estadio GOLD? — Seleccione para ver el detalle</div>
+    <div class="gold-btns">
+      <button class="gold-btn active" onclick="showGold(0,this)">GOLD I — Leve</button>
+      <button class="gold-btn" onclick="showGold(1,this)">GOLD II — Moderado</button>
+      <button class="gold-btn" onclick="showGold(2,this)">GOLD III — Grave</button>
+      <button class="gold-btn" onclick="showGold(3,this)">GOLD IV — Muy grave</button>
+    </div>
+
+    <div class="gold-panel active" id="gold0">
+      <div class="breath-row"><div class="breath-label-row"><span>Capacidad pulmonar (VEF₁)</span><span>≥ 80%</span></div><div class="breath-bar-wrap"><div class="breath-bar" style="width:85%;background:#639922"></div></div></div>
+      <div class="alert alert-success"><strong>Estadio I — Leve</strong>Función pulmonar conservada. Síntomas leves o ausentes. Generalmente diagnosticada de forma incidental durante una espirometría. La sedación con óxido nitroso/oxígeno es <strong>posible con monitorización adecuada.</strong></div>
+      <div class="tags"><span class="tag tag-green">Sedación N₂O/O₂: posible</span><span class="tag tag-green">Consultorio dental: habitual</span><span class="tag tag-green">SpO₂ basal ≥ 94%</span></div>
+    </div>
+
+    <div class="gold-panel" id="gold1">
+      <div class="breath-row"><div class="breath-label-row"><span>Capacidad pulmonar (VEF₁)</span><span>50–79%</span></div><div class="breath-bar-wrap"><div class="breath-bar" style="width:63%;background:#EF9F27"></div></div></div>
+      <div class="alert alert-warning"><strong>Estadio II — Moderado</strong>Disnea de esfuerzo y tos habituales. La sedación puede realizarse en el consultorio si el paciente está <strong>estable, sin exacerbación reciente</strong> y con SpO₂ ≥ 92%. Se requiere monitorización continua.</div>
+      <div class="tags"><span class="tag tag-green">N₂O/O₂ con precaución: posible</span><span class="tag tag-amber">BZD oral: solo con evaluación previa</span><span class="tag tag-red">BZD IV: preferir entorno hospitalario</span></div>
+    </div>
+
+    <div class="gold-panel" id="gold2">
+      <div class="breath-row"><div class="breath-label-row"><span>Capacidad pulmonar (VEF₁)</span><span>30–49%</span></div><div class="breath-bar-wrap"><div class="breath-bar" style="width:38%;background:#E24B4A"></div></div></div>
+      <div class="alert alert-danger"><strong>Estadio III — Grave</strong>Disnea marcada, intolerancia al ejercicio, exacerbaciones frecuentes. La sedación en consultorio es de <strong>alto riesgo</strong>. Si se requiere, debe realizarse en entorno hospitalario con anestesiólogo y soporte ventilatorio disponible.</div>
+      <div class="tags"><span class="tag tag-red">N₂O: contraindicado si hay bulas</span><span class="tag tag-red">BZD: contraindicado ambulatorio</span><span class="tag tag-amber">Solo hospitalario con especialista</span></div>
+    </div>
+
+    <div class="gold-panel" id="gold3">
+      <div class="breath-row"><div class="breath-label-row"><span>Capacidad pulmonar (VEF₁)</span><span>&lt; 30%</span></div><div class="breath-bar-wrap"><div class="breath-bar" style="width:20%;background:#A32D2D"></div></div></div>
+      <div class="alert alert-danger"><strong>Estadio IV — Muy grave</strong>Insuficiencia respiratoria, posible uso domiciliario de oxígeno. <strong>La sedación en consultorio está contraindicada.</strong> El tratamiento dental debe realizarse sin sedación o en hospital universitario / de alta complejidad.</div>
+      <div class="tags"><span class="tag tag-red">Sedación: contraindicada en consultorio</span><span class="tag tag-red">Solo anestesia local</span><span class="tag tag-red">Derivar a centro hospitalario</span></div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="metric"><div class="metric-val">213M</div><div class="metric-lbl">personas afectadas mundialmente (2021)</div></div>
+    <div class="metric"><div class="metric-val">#1</div><div class="metric-lbl">causa: tabaquismo crónico</div></div>
+    <div class="metric"><div class="metric-val">37%</div><div class="metric-lbl">reducción en mortalidad estandarizada (1990-2021)</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════ SEDACIÓN ═══════════════ -->
+<section class="section" id="sedacion">
+  <div class="section-head">
+    <h2>¿Qué es la sedación consciente?</h2>
+    <p>La sedación consciente le permite relajarse durante su tratamiento dental sin perder la conciencia ni la capacidad de respirar por sí mismo.</p>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>Sedación ≠ Anestesia general</strong>
+    En la sedación consciente usted permanece despierto, puede responder preguntas y respira de forma autónoma. No se duerme completamente. Esto la hace mucho más segura para pacientes con EPOC que la anestesia general.
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="border-left: 4px solid #3B6D11;">
+      <div class="card-title" style="color:#3B6D11">✅ Óxido nitroso / Oxígeno (N₂O/O₂)</div>
+      <div class="card-body">
+        <p style="margin-bottom:.6rem">Se inhala a través de una mascarilla nasal. Es la <strong>primera opción para pacientes con EPOC leve a moderada.</strong></p>
+        <ul style="margin-left:1.2rem;font-size:13px;color:#5F5E5A;line-height:1.8">
+          <li>Inicio de acción en 3–5 minutos</li>
+          <li>Reversión inmediata al retirar la mascarilla</li>
+          <li>Administra O₂ suplementario simultáneamente</li>
+          <li>No deprime significativamente la respiración</li>
+          <li>Sin ayuno previo obligatorio (comida leve)</li>
+        </ul>
+        <div class="tags" style="margin-top:.75rem">
+          <span class="tag tag-green">Preferida en EPOC I–II</span>
+          <span class="tag tag-amber">Con precaución en EPOC II</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 4px solid #854F0B;">
+      <div class="card-title" style="color:#854F0B">⚠️ Benzodiacepinas orales</div>
+      <div class="card-body">
+        <p style="margin-bottom:.6rem">Pastilla administrada 1 hora antes de la cita. Produce somnolencia y relajación.</p>
+        <ul style="margin-left:1.2rem;font-size:13px;color:#5F5E5A;line-height:1.8">
+          <li>En EPOC: solo con dosis mínimas y evaluación previa</li>
+          <li>Riesgo: puede deprimir la respiración</li>
+          <li>Requiere acompañante para regresar a casa</li>
+          <li>No conducir por 24 horas</li>
+          <li>Antídoto disponible: flumazenilo</li>
+        </ul>
+        <div class="tags" style="margin-top:.75rem">
+          <span class="tag tag-amber">Solo EPOC I con evaluación</span>
+          <span class="tag tag-red">Evitar en EPOC III–IV</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 4px solid #A32D2D;">
+      <div class="card-title" style="color:#A32D2D">🚫 Sedación intravenosa</div>
+      <div class="card-body">
+        <p style="margin-bottom:.6rem">Midazolam o propofol administrado directo en vena. Sedación más profunda.</p>
+        <ul style="margin-left:1.2rem;font-size:13px;color:#5F5E5A;line-height:1.8">
+          <li>Requiere anestesiólogo presente</li>
+          <li>En EPOC grave: riesgo de fallo respiratorio</li>
+          <li>Solo en entorno hospitalario para pacientes con EPOC</li>
+          <li>No recomendada en consultorio para EPOC moderada-grave</li>
+        </ul>
+        <div class="tags" style="margin-top:.75rem">
+          <span class="tag tag-red">Contraindicada en consultorio (EPOC II+)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 4px solid #185FA5;">
+      <div class="card-title" style="color:#185FA5">🏥 Sin sedación — solo anestesia local</div>
+      <div class="card-body">
+        <p style="margin-bottom:.6rem">La opción más segura para la función respiratoria. Siempre posible.</p>
+        <ul style="margin-left:1.2rem;font-size:13px;color:#5F5E5A;line-height:1.8">
+          <li>No afecta la respiración en absoluto</li>
+          <li>Indicada en EPOC grave o muy grave</li>
+          <li>Se puede combinar con técnicas de relajación no farmacológica</li>
+          <li>Comunicación fluida con el dentista durante el procedimiento</li>
+        </ul>
+        <div class="tags" style="margin-top:.75rem">
+          <span class="tag tag-green">Siempre una opción válida</span>
+          <span class="tag tag-green">Recomendada EPOC III–IV</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ RIESGOS ═══════════════ -->
+<section class="section" id="riesgos">
+  <div class="section-head">
+    <h2>Riesgos específicos y cómo se controlan</h2>
+    <p>La EPOC crea interacciones específicas con los sedantes. Conocerlas le permite entender por qué su dentista tomará ciertas precauciones.</p>
+  </div>
+
+  <!-- SVG Mecanismos interacción -->
+  <div class="lung-container">
+    <h3>Cómo interactúan la EPOC y la sedación</h3>
+    <svg width="100%" viewBox="0 0 680 360" role="img">
+      <title>Mecanismos de interacción EPOC-Sedación</title>
+      <desc>Esquema que muestra los 4 mecanismos principales de riesgo cuando un paciente con EPOC recibe sedación</desc>
+      <defs>
+        <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- Centro: EPOC + Sedante -->
+      <rect x="240" y="152" width="200" height="56" rx="12" fill="#0D1B6E" stroke="#1A35E0" stroke-width="1.5"/>
+      <text x="340" y="176" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">EPOC + Sedante</text>
+      <text x="340" y="196" text-anchor="middle" font-size="11" fill="#B5D4F4">¿Qué puede ocurrir?</text>
+
+      <!-- Mecanismo 1 — Depresión respiratoria -->
+      <rect x="20" y="20" width="180" height="76" rx="8" fill="#FCEBEB" stroke="#F7C1C1" stroke-width="1"/>
+      <text x="110" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#791F1F">Depresión</text>
+      <text x="110" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#791F1F">respiratoria</text>
+      <text x="110" y="76" text-anchor="middle" font-size="11" fill="#A32D2D">Benzodiacepinas reducen</text>
+      <text x="110" y="90" text-anchor="middle" font-size="11" fill="#A32D2D">el impulso ventilatorio</text>
+      <line x1="200" y1="72" x2="240" y2="168" stroke="#F09595" stroke-width="1.5" marker-end="url(#arrR)"/>
+
+      <!-- Mecanismo 2 — Bulas -->
+      <rect x="480" y="20" width="180" height="76" rx="8" fill="#FCEBEB" stroke="#F7C1C1" stroke-width="1"/>
+      <text x="570" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#791F1F">Expansión</text>
+      <text x="570" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#791F1F">de bulas (N₂O)</text>
+      <text x="570" y="76" text-anchor="middle" font-size="11" fill="#A32D2D">N₂O difunde a espacios</text>
+      <text x="570" y="90" text-anchor="middle" font-size="11" fill="#A32D2D">aéreos cerrados</text>
+      <line x1="480" y1="72" x2="440" y2="168" stroke="#F09595" stroke-width="1.5" marker-end="url(#arrR)"/>
+
+      <!-- Mecanismo 3 — Posición supina -->
+      <rect x="20" y="264" width="180" height="76" rx="8" fill="#FAEEDA" stroke="#FAC775" stroke-width="1"/>
+      <text x="110" y="286" text-anchor="middle" font-size="12" font-weight="700" fill="#633806">Posición</text>
+      <text x="110" y="302" text-anchor="middle" font-size="12" font-weight="700" fill="#633806">supina</text>
+      <text x="110" y="320" text-anchor="middle" font-size="11" fill="#854F0B">Reduce CRF, aumenta</text>
+      <text x="110" y="334" text-anchor="middle" font-size="11" fill="#854F0B">el trabajo respiratorio</text>
+      <line x1="200" y1="290" x2="240" y2="210" stroke="#FAC775" stroke-width="1.5" marker-end="url(#arrR)"/>
+
+      <!-- Mecanismo 4 — Hipoxia difusional -->
+      <rect x="480" y="264" width="180" height="76" rx="8" fill="#FAEEDA" stroke="#FAC775" stroke-width="1"/>
+      <text x="570" y="286" text-anchor="middle" font-size="12" font-weight="700" fill="#633806">Hipoxia difusional</text>
+      <text x="570" y="302" text-anchor="middle" font-size="12" font-weight="700" fill="#633806">(Efecto Fink)</text>
+      <text x="570" y="320" text-anchor="middle" font-size="11" fill="#854F0B">Al retirar N₂O se</text>
+      <text x="570" y="334" text-anchor="middle" font-size="11" fill="#854F0B">diluye el O₂ alveolar</text>
+      <line x1="480" y1="290" x2="440" y2="210" stroke="#FAC775" stroke-width="1.5" marker-end="url(#arrR)"/>
+    </svg>
+    <p style="text-align:center;font-size:11px;color:#888780;margin-top:.5rem">Chino K, Ganzberg S, Mendoza K. Anesth Prog. 2019;66(1):44-51</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛡️ ¿Cómo lo protege su dentista?</div>
+    <div class="card-body">
+      <ul class="checklist">
+        <li><span class="check-icon ok">✓</span><div><strong>Monitorización de oxígeno (oximetría de pulso)</strong> — Un sensor en su dedo mide su saturación de oxígeno en tiempo real durante todo el procedimiento.</div></li>
+        <li><span class="check-icon ok">✓</span><div><strong>Posición semierecta (30–45°)</strong> — No se le reclinará completamente, ya que la posición horizontal reduce su capacidad pulmonar.</div></li>
+        <li><span class="check-icon ok">✓</span><div><strong>Oxígeno aumentado en la mezcla</strong> — Si recibe N₂O, se usará al menos 30% de oxígeno en la mezcla (más que el aire ambiente que es 21%).</div></li>
+        <li><span class="check-icon ok">✓</span><div><strong>Sesiones cortas (&lt; 45 min)</strong> — Los procedimientos se dividen para reducir la carga sobre su sistema respiratorio.</div></li>
+        <li><span class="check-icon ok">✓</span><div><strong>Washout de oxígeno al final</strong> — Al terminar el N₂O, se administrará O₂ puro por 5 minutos para prevenir la hipoxia difusional (efecto Fink).</div></li>
+        <li><span class="check-icon ok">✓</span><div><strong>Inhalador de rescate disponible</strong> — Su salbutamol u otro broncodilatador debe estar siempre accesible durante el procedimiento.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#A32D2D">🚨 Señales de alarma — Informe inmediatamente si nota:</div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div class="alert alert-danger" style="margin-bottom:0"><strong>Durante el procedimiento:</strong>Sensación de ahogo, falta de aire intensa, confusión, coloración azulada de labios o uñas (cianosis).</div>
+        <div class="alert alert-danger" style="margin-bottom:0"><strong>Después de llegar a casa:</strong>Dificultad para respirar mayor a la habitual, coloración azulada, pérdida de conciencia. Llame al 131 (SAMU).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CHECKER ═══════════════ -->
+<section class="section" id="checker">
+  <div class="section-head">
+    <h2>¿Puedo sedarme? — Evaluación orientativa</h2>
+    <p>Responda estas preguntas para recibir una orientación general. Recuerde: siempre debe confirmar con su dentista y médico tratante.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔍 Responda las siguientes preguntas</div>
+    <div class="card-body">
+      <div class="checker-field">
+        <label>1. ¿Cuál es su estadio GOLD según su neumólogo?</label>
+        <select id="c-gold">
+          <option value="">— Seleccione —</option>
+          <option value="1">GOLD I (leve, VEF₁ ≥ 80%)</option>
+          <option value="2">GOLD II (moderado, VEF₁ 50–79%)</option>
+          <option value="3">GOLD III (grave, VEF₁ 30–49%)</option>
+          <option value="4">GOLD IV (muy grave, VEF₁ &lt; 30%)</option>
+          <option value="0">No lo sé / No me han hecho espirometría</option>
+        </select>
+      </div>
+
+      <div class="checker-field">
+        <label>2. En las últimas 4 semanas, ¿ha tenido una exacerbación (crisis de dificultad respiratoria intensa)?</label>
+        <select id="c-exac">
+          <option value="">— Seleccione —</option>
+          <option value="no">No, estoy estable</option>
+          <option value="si">Sí, tuve una crisis reciente</option>
+          <option value="hospital">Sí, requirió hospitalización</option>
+        </select>
+      </div>
+
+      <div class="checker-field">
+        <label>3. ¿Usa oxígeno domiciliario permanente?</label>
+        <select id="c-o2">
+          <option value="">— Seleccione —</option>
+          <option value="no">No</option>
+          <option value="si">Sí, uso O₂ en casa</option>
+        </select>
+      </div>
+
+      <div class="checker-field">
+        <label>4. ¿Se le ha diagnosticado bulas enfisematosas (burbujas de aire en los pulmones)?</label>
+        <select id="c-bulas">
+          <option value="">— Seleccione —</option>
+          <option value="no">No o no lo sé</option>
+          <option value="si">Sí, tengo bulas confirmadas</option>
+        </select>
+      </div>
+
+      <button onclick="runChecker()" style="background:var(--azul);color:#fff;border:none;padding:11px 24px;border-radius:8px;font-size:14px;cursor:pointer;margin-top:.5rem">
+        Ver mi orientación →
+      </button>
+
+      <div id="checker-result" style="margin-top:1rem"></div>
+    </div>
+  </div>
+
+  <div class="alert alert-warning">
+    <strong>Esta herramienta NO reemplaza una evaluación clínica.</strong>
+    El resultado es orientativo y educativo. Su dentista debe evaluar su caso individualmente, idealmente con un informe de su neumólogo.
+  </div>
+</section>
+
+<!-- ═══════════════ PREPARACIÓN ═══════════════ -->
+<section class="section" id="preparacion">
+  <div class="section-head">
+    <h2>Preparación para su cita con sedación</h2>
+    <p>Siga estos pasos para llegar a su cita en las mejores condiciones posibles.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📅 Línea de tiempo: qué hacer y cuándo</div>
+    <div class="card-body">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot blue"></div>
+          <div class="tl-time">30 días antes o más</div>
+          <div class="tl-title">Consulta con su neumólogo (si EPOC II–IV)</div>
+          <div class="tl-body">Solicite una espirometría reciente y saturometría. Pida un informe que indique su estado clínico actual. Compártalo con su dentista.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot blue"></div>
+          <div class="tl-time">1 semana antes</div>
+          <div class="tl-title">Confirme que sus medicamentos están al día</div>
+          <div class="tl-body">Verifique que tiene inhaladores vigentes (broncodilatador de rescate y de mantención). Comunique a su dentista todos los medicamentos que toma. NO suspenda ninguno.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot blue"></div>
+          <div class="tl-time">Día anterior</div>
+          <div class="tl-title">Confirme el ayuno si corresponde</div>
+          <div class="tl-body">Solo para sedación oral o IV: sólidos 6 horas antes, líquidos claros 2 horas antes. Para N₂O: puede comer normalmente (comida leve 2 horas antes).</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div class="tl-time">Día de la cita — mañana</div>
+          <div class="tl-title">Use su inhalador antes de salir</div>
+          <div class="tl-body">Use su broncodilatador de rescate (ej. salbutamol 2 inhalaciones) 15 minutos antes de la cita. Traiga su inhalador consigo. Si es sedación oral o IV, traiga un acompañante adulto.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div class="tl-time">En el consultorio</div>
+          <div class="tl-title">Informe de cualquier cambio reciente</div>
+          <div class="tl-body">Diga si tuvo tos, fiebre, más dificultad para respirar en los últimos días. El dentista colocará el sensor de oxígeno antes de comenzar. La silla estará semierecta para ayudar su respiración.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div class="tl-time">Al terminar</div>
+          <div class="tl-title">Observe 30 minutos antes de irse</div>
+          <div class="tl-body">Espere hasta que su oxígeno vuelva a valores normales. Si recibió N₂O, se le administrará O₂ puro por 5 minutos antes de retirar la mascarilla. Descanse en casa el día del procedimiento.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot red"></div>
+          <div class="tl-time">Después — signos de alarma</div>
+          <div class="tl-title">Consulte urgencias si nota:</div>
+          <div class="tl-body">Falta de aire mayor a la habitual, labios o uñas azulados (cianosis), confusión, pérdida de conciencia. Llame al 131 (SAMU Chile).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Lista de cosas que traer a su cita</div>
+    <div class="card-body">
+      <ul class="checklist">
+        <li><span class="check-icon ok">✓</span>Su inhalador de rescate (salbutamol u otro broncodilatador)</li>
+        <li><span class="check-icon ok">✓</span>Lista de todos sus medicamentos actuales (o traer los envases)</li>
+        <li><span class="check-icon ok">✓</span>Informe de su último control con neumólogo (si tiene)</li>
+        <li><span class="check-icon ok">✓</span>Espirometría reciente (si la tiene disponible)</li>
+        <li><span class="check-icon ok">✓</span>Acompañante adulto (obligatorio para sedación oral o IV)</li>
+        <li><span class="check-icon warn">!</span>Si tiene concentrador o tubo de O₂ domiciliario, informe al dentista aunque no lo traiga</li>
+        <li><span class="check-icon no">✗</span>NO tome alcohol el día anterior ni el día de la cita</li>
+        <li><span class="check-icon no">✗</span>NO fume el día de la cita (irrita adicionalmente la vía aérea)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:#A32D2D">
+    <div class="card-title" style="color:#A32D2D">🚨 Protocolo de emergencia — Para que lo conozca su entorno</div>
+    <div class="card-body">
+      <div class="emerg-step"><div class="emerg-num">1</div><div><strong>Suspender sedación:</strong> Retirar mascarilla de N₂O, detener cualquier medicamento sedante.</div></div>
+      <div class="emerg-step"><div class="emerg-num">2</div><div><strong>Posición y oxígeno:</strong> Sentar al paciente erguido, administrar O₂ 100% con mascarilla facial.</div></div>
+      <div class="emerg-step"><div class="emerg-num">3</div><div><strong>Broncodilatador:</strong> Salbutamol 4–8 inhalaciones si hay sibilancias o broncoespasmo.</div></div>
+      <div class="emerg-step"><div class="emerg-num">4</div><div><strong>Antídoto si corresponde:</strong> Si se usaron benzodiacepinas, el dentista puede revertirlas con flumazenilo.</div></div>
+      <div class="emerg-step"><div class="emerg-num">5</div><div><strong>Llamar al 131 (SAMU)</strong> si SpO₂ &lt; 88% persistente o pérdida de consciencia.</div></div>
+      <div class="emerg-step" style="border-bottom:none"><div class="emerg-num">6</div><div><strong>RCP:</strong> Si paro cardiorrespiratorio, iniciar compresiones y activar desfibrilador (DEA).</div></div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:1rem">
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir esta guía</button>
+  </div>
+</section>
+
+<!-- ═══════════════ QUIZ ═══════════════ -->
+<section class="section" id="quiz">
+  <div class="section-head">
+    <h2>Quiz — Ponga a prueba lo que aprendió</h2>
+    <p>8 preguntas basadas en el contenido de esta guía. Recibirá retroalimentación inmediata en cada respuesta.</p>
+  </div>
+  <div class="card" id="quiz-card">
+    <div id="quiz-body"></div>
+  </div>
+</section>
+
+<div class="footer">
+  Material educativo para pacientes con EPOC — Basado en evidencia científica indexada en PubMed.<br>
+  GOLD 2024 · Chino et al., Anesth Prog 2019 · Herrera et al., J Clin Periodontol 2023 · Zhang et al., Intern Emerg Med 2026<br>
+  Desarrollado por Cristóbal Paredes Peñafiel · Uso educativo exclusivo · 2026
+</div>
+
+<script>
+// ─── NAV ────────────────────────────────────────────────────────────────────
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
+  if (el && el.classList) el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ─── GOLD PANELS ─────────────────────────────────────────────────────────────
+function showGold(i, btn) {
+  document.querySelectorAll('.gold-panel').forEach((p,j) => p.classList.toggle('active', j === i));
+  document.querySelectorAll('.gold-btn').forEach((b,j) => b.classList.toggle('active', j === i));
+}
+
+// ─── CHECKER ─────────────────────────────────────────────────────────────────
+function runChecker() {
+  var gold = document.getElementById('c-gold').value;
+  var exac = document.getElementById('c-exac').value;
+  var o2   = document.getElementById('c-o2').value;
+  var bula = document.getElementById('c-bulas').value;
+  var res  = document.getElementById('checker-result');
+
+  if (!gold || !exac || !o2 || !bula) {
+    res.innerHTML = '<div class="alert alert-warning">Por favor responda todas las preguntas.</div>';
+    return;
+  }
+
+  var level = 'green';
+  var icon = '✅';
+  var title = 'Orientación: sedación probablemente posible con precauciones';
+  var body = 'Según sus respuestas, usted podría ser candidato para sedación con óxido nitroso/oxígeno en el consultorio dental, siempre que esté clínicamente estable. Es fundamental que su dentista confirme esto con una evaluación presencial.';
+  var items = [];
+
+  if (gold === '4' || o2 === 'si' || exac === 'hospital') {
+    level = 'red'; icon = '🚫';
+    title = 'Orientación: la sedación en consultorio NO es recomendable';
+    body = 'Sus respuestas sugieren que la sedación fuera de un entorno hospitalario no es segura para usted en este momento. Se recomienda consultar con un centro dental hospitalario y con su neumólogo para evaluar alternativas.';
+  } else if (gold === '3' || exac === 'si' || gold === '0') {
+    level = 'amber'; icon = '⚠️';
+    title = 'Orientación: la sedación requiere evaluación especializada';
+    body = 'Algunos factores en sus respuestas requieren una evaluación más cuidadosa antes de decidir sobre la sedación. Consulte con su neumólogo y comunique todos los resultados a su dentista antes de cualquier procedimiento.';
+  }
+
+  if (bula === 'si') {
+    items.push('⚠️ Tiene bulas enfisematosas: el óxido nitroso está contraindicado. Si se indica sedación, debe ser con otro método.');
+  }
+  if (gold === '0') {
+    items.push('ℹ️ No conocer su estadio GOLD es importante: pida a su médico una espirometría antes de cualquier sedación.');
+  }
+  if (exac === 'si') {
+    items.push('ℹ️ Una exacerbación reciente indica que su sistema respiratorio puede estar sensibilizado. Espere al menos 4 semanas de estabilidad.');
+  }
+
+  var bg = level === 'green' ? '#EAF3DE' : level === 'amber' ? '#FAEEDA' : '#FCEBEB';
+  var bd = level === 'green' ? '#C0DD97' : level === 'amber' ? '#FAC775' : '#F7C1C1';
+  var tc = level === 'green' ? '#173404' : level === 'amber' ? '#412402' : '#501313';
+
+  var html = '<div class="checker-result ' + level + '" style="text-align:left">' +
+    '<div class="result-icon" style="font-size:32px;margin-bottom:.5rem">' + icon + '</div>' +
+    '<div class="result-title" style="color:' + tc + '">' + title + '</div>' +
+    '<div class="result-body" style="color:' + tc + '">' + body + '</div>';
+  if (items.length) {
+    html += '<ul style="margin:.75rem 0 0 1.2rem;font-size:13px;color:' + tc + '">';
+    items.forEach(function(i){ html += '<li style="margin-bottom:4px">' + i + '</li>'; });
+    html += '</ul>';
+  }
+  html += '<div style="margin-top:1rem;font-size:12px;color:' + tc + ';border-top:1px solid ' + bd + ';padding-top:.75rem"><strong>Recuerde:</strong> Esta orientación es educativa. Consulte siempre a su equipo de salud.</div></div>';
+  res.innerHTML = html;
+}
+
+// ─── QUIZ ─────────────────────────────────────────────────────────────────────
+var questions = [
+  { q: "¿Cuál es el criterio espirométrico que confirma el diagnóstico de EPOC según GOLD 2024?",
+    opts: ["VEF₁ < 80% del predicho", "VEF₁/CVF < 0.70 post-broncodilatador", "CVF < 70% del predicho", "Saturación de O₂ < 92%"],
+    ans: 1, exp: "Correcto. El cociente VEF₁/CVF menor a 0.70 después de usar un broncodilatador es el criterio diagnóstico de obstrucción al flujo de aire según GOLD 2024. Este es el pilar del diagnóstico de EPOC." },
+  { q: "¿Qué tipo de sedación es la primera elección para un paciente con EPOC estadio I–II estable en el consultorio?",
+    opts: ["Propofol intravenoso", "Midazolam oral en dosis alta", "Óxido nitroso / oxígeno inhalatorio", "Ketamina intramuscular"],
+    ans: 2, exp: "El N₂O/O₂ es la técnica de elección porque permite control preciso de la concentración, reversión inmediata, no deprime significativamente la ventilación y administra O₂ suplementario de manera simultánea." },
+  { q: "¿Por qué las benzodiacepinas son de uso restringido en pacientes con EPOC grave?",
+    opts: ["Porque causan hipertensión arterial", "Porque pueden deprimir el impulso respiratorio y causar hipercapnia", "Porque producen broncoespasmo", "Porque están contraindicadas en todos los pacientes adultos mayores"],
+    ans: 1, exp: "Las benzodiacepinas potencian el receptor GABA-A y reducen la frecuencia respiratoria. En pacientes con EPOC grave que ya dependen del estímulo hipóxico, esto puede precipitar hipercapnia e insuficiencia respiratoria." },
+  { q: "¿Cuál es la posición recomendada en el sillón dental para un paciente con EPOC?",
+    opts: ["Completamente reclinado (supino)", "Semi-erecto a 30-45°", "De pie", "En decúbito lateral"],
+    ans: 1, exp: "La posición supina reduce la capacidad residual funcional al desplazar el diafragma cranealmente, lo que empeora la relación ventilación-perfusión. La posición semi-erecta a 30-45° minimiza este efecto." },
+  { q: "¿Por qué el óxido nitroso está contraindicado en pacientes con bulas enfisematosas?",
+    opts: ["Porque irrita los bronquios", "Porque es 34 veces más soluble que el nitrógeno y puede expandir espacios aéreos cerrados", "Porque inhibe el surfactante pulmonar", "Porque produce hipoxemia por efecto vasoconstrictor"],
+    ans: 1, exp: "El N₂O tiene una solubilidad en sangre 34 veces mayor que el nitrógeno. Esto hace que difunda rápidamente hacia espacios aéreos cerrados como bulas enfisematosas, expandiéndolas y pudiendo causar un neumotórax a tensión." },
+  { q: "¿Qué es el 'efecto Fink' o hipoxia difusional?",
+    opts: ["Un broncoespasmo inducido por el óxido nitroso", "La hipoxia que ocurre al suspender el N₂O porque el gas difunde masivamente al alveolo diluyendo el O₂", "Una reacción alérgica a los anestésicos locales", "La saturación de hemoglobina con CO₂ en lugar de O₂"],
+    ans: 1, exp: "Al suspender el N₂O, el gas almacenado en sangre difunde masivamente hacia los alvéolos, diluyendo el oxígeno alveolar y causando hipoxia transitoria. Se previene con un washout de O₂ al 100% por 3-5 minutos al finalizar." },
+  { q: "¿Cuánto tiempo antes de la cita se recomienda usar el broncodilatador de rescate (ej. salbutamol)?",
+    opts: ["2 horas antes", "24 horas antes", "15 minutos antes", "Solo si tiene síntomas durante el procedimiento"],
+    ans: 2, exp: "Se recomienda usar el broncodilatador de rescate 15 minutos antes del procedimiento para reducir la hiperreactividad bronquial y optimizar la función pulmonar antes de la sedación." },
+  { q: "Según la evidencia (EFP/WONCA 2023), ¿cuál es la relación entre la periodontitis y la EPOC?",
+    opts: ["No existe relación demostrada entre ambas enfermedades", "La periodontitis se asocia de forma independiente con la EPOC; la aspiración de bacterias periodontopáticas puede exacerbar la enfermedad pulmonar", "La EPOC protege contra la periodontitis", "Solo se relacionan en pacientes fumadores y la asociación desaparece al dejar de fumar"],
+    ans: 1, exp: "El consenso EFP/WONCA 2023 concluye que la periodontitis se asocia de forma independiente con la EPOC. La aspiración de bacterias periodontopáticas (P. gingivalis, F. nucleatum) al tracto respiratorio inferior puede exacerbar la inflamación pulmonar." }
+];
+
+var qIdx = 0, score = 0, answered = false;
+
+function renderQuiz() {
+  if (qIdx >= questions.length) {
+    var pct = Math.round(score / questions.length * 100);
+    var msg = pct >= 80 ? '¡Excelente! Comprende muy bien la relación entre EPOC y sedación.' :
+              pct >= 60 ? 'Bien. Le recomendamos repasar las secciones sobre riesgos y preparación.' :
+              'Le sugerimos releer la guía completa antes de su próxima cita dental.';
+    document.getElementById('quiz-body').innerHTML =
+      '<div class="score-display">' +
+      '<div style="font-size:14px;color:#5F5E5A;margin-bottom:.5rem">Puntaje final</div>' +
+      '<div class="score-big">' + score + '/' + questions.length + '</div>' +
+      '<div style="font-size:20px;color:var(--azul);margin:.5rem 0">' + pct + '%</div>' +
+      '<div style="font-size:14px;color:#5F5E5A;max-width:440px;margin:0 auto 1.5rem">' + msg + '</div>' +
+      '<button onclick="restartQuiz()" style="background:var(--azul);color:#fff;border:none;padding:11px 24px;border-radius:8px;font-size:14px;cursor:pointer">Reiniciar quiz</button>' +
+      '</div>';
+    return;
+  }
+  var q = questions[qIdx];
+  var html = '<div class="quiz-progress" style="margin-bottom:1rem">Pregunta ' + (qIdx+1) + ' de ' + questions.length + ' · Puntaje: ' + score + '</div>' +
+    '<div class="quiz-q">' + q.q + '</div>';
+  q.opts.forEach(function(opt, i) {
+    html += '<div class="quiz-opt" id="opt' + i + '" onclick="selectOpt(' + i + ')">' + opt + '</div>';
+  });
+  html += '<div class="quiz-feedback" id="qfb"></div>' +
+    '<div class="quiz-nav"><button onclick="nextQ()" id="nextbtn" style="display:none">Siguiente →</button>' +
+    '<span class="quiz-progress" id="hint" style="font-size:13px;color:#5F5E5A">Seleccione una respuesta</span></div>';
+  document.getElementById('quiz-body').innerHTML = html;
+  answered = false;
+}
+
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  var q = questions[qIdx];
+  var opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(function(o, j) {
+    o.style.pointerEvents = 'none';
+    if (j === q.ans) o.classList.add('correct');
+    else if (j === i && i !== q.ans) o.classList.add('wrong');
+  });
+  var fb = document.getElementById('qfb');
+  fb.style.display = 'block';
+  fb.classList.add('show');
+  if (i === q.ans) {
+    score++;
+    fb.style.background = '#EAF3DE';
+    fb.style.color = '#173404';
+    fb.innerHTML = '<strong>✓ Correcto.</strong> ' + q.exp;
+  } else {
+    fb.style.background = '#FCEBEB';
+    fb.style.color = '#501313';
+    fb.innerHTML = '<strong>✗ Incorrecto.</strong> ' + q.exp;
+  }
+  document.getElementById('nextbtn').style.display = 'inline-block';
+  document.getElementById('hint').style.display = 'none';
+}
+
+function nextQ() { qIdx++; renderQuiz(); }
+function restartQuiz() { qIdx = 0; score = 0; renderQuiz(); }
+
+renderQuiz();
+</script>
+</body>
+</html>
